@@ -1,0 +1,74 @@
+{% extends "base.html" %}
+{% block title %}Nova — Step into the future of play{% endblock %}
+{% block content %}
+<section class="hero">
+  <div>
+    <div class="eyebrow">VR &middot; Gaming &middot; Technology</div>
+    <h1>Step into the <span class="accent">future</span> of play</h1>
+    <p class="lead">
+      Nova builds immersive VR experiences with near-zero latency haptics,
+      so every move feels real the moment you make it.
+    </p>
+    <div class="hero-actions">
+      <a href="{{ url_for('projects') }}" class="btn btn-primary">Explore products</a>
+      <a href="{{ url_for('about') }}" class="btn btn-secondary">How it works</a>
+    </div>
+    <div class="stat-row">
+      <div class="stat"><strong>600+</strong><span>Active players</span></div>
+      <div class="stat"><strong>40+</strong><span>Titles supported</span></div>
+      <div class="stat"><strong>99.9%</strong><span>Uptime</span></div>
+    </div>
+  </div>
+
+  <div class="hero-visual">
+    <div class="orbit-ring"></div>
+    <div class="hero-glow"></div>
+    <div class="hero-card">
+      <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect x="10" y="35" width="80" height="34" rx="17" fill="#2a1f3d" stroke="#c084fc" stroke-width="1.5"/>
+        <circle cx="34" cy="52" r="10" fill="#0b0614" stroke="#22d3ee" stroke-width="1.5"/>
+        <circle cx="66" cy="52" r="10" fill="#0b0614" stroke="#22d3ee" stroke-width="1.5"/>
+        <path d="M44 52h12" stroke="#c084fc" stroke-width="1.5"/>
+        <path d="M10 45c-6 0-6 14 0 14" stroke="#9333ea" stroke-width="2" stroke-linecap="round"/>
+        <path d="M90 45c6 0 6 14 0 14" stroke="#9333ea" stroke-width="2" stroke-linecap="round"/>
+      </svg>
+      <div class="floating-badge">
+        <div>
+          <strong>Low latency</strong>
+          <span>&lt; 8ms haptic response</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="features">
+  <div class="section-title">
+    <h2>Why players choose Nova</h2>
+    <p>Three things we obsess over so you don't have to.</p>
+  </div>
+  <div class="feature-grid">
+    <div class="feature-card">
+      <div class="feature-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 12h4l3 8 4-16 3 8h6"/></svg>
+      </div>
+      <h3>Immersive worlds</h3>
+      <p>Hand-crafted environments with spatial audio that reacts to every step you take.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg>
+      </div>
+      <h3>Near-zero latency</h3>
+      <p>Optimized haptic pipeline keeps feedback under 8 milliseconds, every time.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+      </div>
+      <h3>Cross-platform</h3>
+      <p>One account, every headset. Pick up where you left off on any device.</p>
+    </div>
+  </div>
+</section>
+{% endblock %}

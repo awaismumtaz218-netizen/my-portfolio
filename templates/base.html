@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{% block title %}Nova VR{% endblock %}</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+  <nav>
+    <div class="brand">Nova</div>
+    <div class="nav-links">
+      <a href="{{ url_for('home') }}">Home</a>
+      <a href="{{ url_for('about') }}">About</a>
+      <a href="{{ url_for('projects') }}">Products</a>
+      <a href="{{ url_for('contact') }}">Contact</a>
+    </div>
+    <div class="nav-menu-btn"><span></span><span></span><span></span></div>
+  </nav>
+
+  {% block content %}{% endblock %}
+
+  <footer>
+    &copy; 2026 Nova. Built with Flask, deployed on AWS.
+  </footer>
+</body>
+</html>
