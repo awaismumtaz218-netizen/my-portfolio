@@ -6,37 +6,11 @@ on:
       - main
 
 jobs:
-  build-and-deploy:
+  deploy:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-
-      - name: Set up Python
-        uses: actions/setup-python@v5
-        with:
-          python-version: "3.12"
-
-      - name: Install dependencies
-        run: pip install -r requirements.txt
-
-      - name: Basic sanity check (import the app)
-        run: python -c "import application; print('App imports fine')"
-
-      - name: Create deployment package
-        run: zip -r deploy.zip . -x '*.git*'
-
-      - name: Copy files to EC2 via SCP
-        uses: appleboy/scp-action@v0.1.7
-        with:
-          host: ${{ secrets.EC2_HOST }}
-          username: ${{ secrets.EC2_USERNAME }}
-          key: ${{ secrets.EC2_SSH_KEY }}
-          source: "deploy.zip"
-          target: "/home/ubuntu/my-portfolio"
-
-      - name: Deploy on EC2 via SSH
+      - name: Deploy and Build on EC2 via SSH
         uses: appleboy/ssh-action@v1.0.3
         with:
           host: ${{ secrets.EC2_HOST }}
@@ -44,8 +18,20 @@ jobs:
           key: ${{ secrets.EC2_SSH_KEY }}
           script: |
             cd /home/ubuntu/my-portfolio
-            unzip -o deploy.zip -d /home/ubuntu/my-portfolio
-            rm deploy.zip
+
+            echo "==> Pulling latest code from GitHub"
+            git pull origin main
+
+            echo "==> Activating virtual environment"
             source venv/bin/activate
+
+            echo "==> Installing dependencies"
             pip install -r requirements.txt
+
+            echo "==> Running sanity check (import the app)"
+            python -c "import application; print('App imports fine')"
+
+            echo "==> Restarting the app service"
             sudo systemctl restart portflip
+
+            echo "==> Deployment finished successfully"
