@@ -1,4 +1,4 @@
-name: Deploy to AWS Elastic Beanstalk
+name: Deploy Portflip to AWS EC2
 
 on:
   push:
@@ -27,13 +27,25 @@ jobs:
       - name: Create deployment package
         run: zip -r deploy.zip . -x '*.git*'
 
-      - name: Deploy to Elastic Beanstalk
-        uses: einaregilsson/beanstalk-deploy@v22
+      - name: Copy files to EC2 via SCP
+        uses: appleboy/scp-action@v0.1.7
         with:
-          aws_access_key: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws_secret_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          application_name: my-portfolio-app
-          environment_name: My-portfolio-app-env
-          region: us-east-1
-          version_label: ${{ github.sha }}
-          deployment_package: deploy.zip
+          host: ${{ secrets.EC2_HOST }}
+          username: ${{ secrets.EC2_USERNAME }}
+          key: ${{ secrets.EC2_SSH_KEY }}
+          source: "deploy.zip"
+          target: "/home/ubuntu/my-portfolio"
+
+      - name: Deploy on EC2 via SSH
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.EC2_HOST }}
+          username: ${{ secrets.EC2_USERNAME }}
+          key: ${{ secrets.EC2_SSH_KEY }}
+          script: |
+            cd /home/ubuntu/my-portfolio
+            unzip -o deploy.zip -d /home/ubuntu/my-portfolio
+            rm deploy.zip
+            source venv/bin/activate
+            pip install -r requirements.txt
+            sudo systemctl restart portflip
